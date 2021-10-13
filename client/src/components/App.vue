@@ -12,7 +12,7 @@
     </md-app-toolbar>
 
     <md-app-content>
-      <router-view/>
+      <song-view />
     </md-app-content>
   </md-app>
 </template>
