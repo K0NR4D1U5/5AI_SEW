@@ -1,18 +1,18 @@
 <template>
   <div>
     <md-toolbar class="md-pagination" md-elevation="0">
-      <md-button :disabled="curPage === 1" @click="curPage = 1; load()" class="md-icon-button"><md-icon>first_page</md-icon></md-button>
-      <md-button :disabled="curPage === 1" @click="curPage--; load()" class="md-icon-button"><md-icon>navigate_before</md-icon></md-button>
-      <span>{{ curPage }} / {{ maxPages }}</span>
-      <md-button :disabled="curPage === maxPages" @click="curPage++; load()" class="md-icon-button"><md-icon>navigate_next</md-icon></md-button>
-      <md-button :disabled="curPage === maxPages" @click="curPage = maxPages; load()" class="md-icon-button"><md-icon>last_page</md-icon></md-button>
+      <md-button :disabled="currentPage === 1" @click="currentPage = 1; load()" class="md-icon-button"><md-icon>first_page</md-icon></md-button>
+      <md-button :disabled="currentPage === 1" @click="currentPage--; load()" class="md-icon-button"><md-icon>navigate_before</md-icon></md-button>
+      <span>{{ currentPage }} / {{ maximumPages }}</span>
+      <md-button :disabled="currentPage === maximumPages" @click="currentPage++; load()" class="md-icon-button"><md-icon>navigate_next</md-icon></md-button>
+      <md-button :disabled="currentPage === maximumPages" @click="currentPage = maximumPages; load()" class="md-icon-button"><md-icon>last_page</md-icon></md-button>
     </md-toolbar>
     <md-list
         class="md-song-list-container">
       <song
-          v-for="s in songs"
-          :key="s._links.self.href"
-          :song="s"
+          v-for="song in songs"
+          :key="song._links.self.href"
+          :song="song"
       />
     </md-list>
   </div>
@@ -31,8 +31,8 @@ export default {
     data() {
         return {
             songs: [],
-          curPage: 1,
-          maxPages: 5,
+          currentPage: 1,
+          maximumPages: 5,
           size: 4,
         }
     },
@@ -41,10 +41,10 @@ export default {
     },
     methods: {
         load() {
-            loadPage(SongEntity, this.curPage - 1, this.size)
+            loadPage(SongEntity, this.currentPage - 1, this.size)
                 .then(res => {
                     this.songs = res.entities;
-                    this.maxPages = res.page.totalPages;
+                    this.maximumPages = res.page.totalPages;
                 })
         }
     },

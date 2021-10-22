@@ -4,5 +4,4 @@ export default class Song {
     }
 }
 
-// Pfad dieser Entities im REST-API des Servers
 Song.path = 'songs'

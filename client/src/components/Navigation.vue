@@ -20,7 +20,7 @@
 import Page from '@/models/Page';
 
 export default {
-    name: 'PageNav',
+    name: 'Navigation',
     props: {
         page: {
             type: Page,
