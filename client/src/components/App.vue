@@ -1,16 +1,17 @@
 <template>
   <md-app
-      v-cloak
-      md-waterfall
-      md-mode="fixed"
+    v-cloak
+    md-waterfall
+    md-mode="fixed"
   >
     <md-app-toolbar class="md-primary md-dense">
       <div class="md-toolbar-section-start">
-        <router-link to="/" class="md-title">Song Display</router-link>
+        <router-link to="/" class="md-title">YouSong</router-link>
       </div>
-      <SongDisplay></SongDisplay>
+      <div class="md-subheading md-toolbar-section-end">
+        <router-link to="/info" class="md-title">Info</router-link>
+      </div>
     </md-app-toolbar>
-
     <md-app-content>
       <song-view />
     </md-app-content>
@@ -18,16 +19,15 @@
 </template>
 
 <script>
-import SongDisplay from "@/components/SongDisplay/SongDisplay";
+import SongView from '@/components/SongView';
 
 export default {
-  name: 'App',
-
-  components: {
-    SongDisplay
-  },
-
-  methods: {},
+    name: 'App',
+    components: {
+        SongView,
+    },
+    methods: {
+    },
 }
 </script>
 
