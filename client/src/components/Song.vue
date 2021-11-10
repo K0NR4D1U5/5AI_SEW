@@ -1,29 +1,33 @@
 <template>
-  <md-list-item>
-    <md-icon class="md-primary">music_note</md-icon>
-
-    <div class="md-list-item-text">
-      <span>{{ song.title }}</span>
-      <span>{{ song.artist }}</span>
-    </div>
-    <div>
-      <md-chip v-for="genre in generateGenreList" :key="genre">{{ genre }}</md-chip>
-    </div>
-  </md-list-item>
+  <div class="md-layout md-alignment-center-left">
+    <div class="md-layout-item">{{ song.title }}</div>
+    <div class="md-layout-item md-size-20">{{ song.artist }}</div>
+    <div class="md-layout-item md-size-20">{{ song.genre }}</div>
+    <md-button class="md-icon-button md-dense md-primary md-accent" @click="deleteSong">
+      <md-icon>delete</md-icon>
+    </md-button>
+  </div>
 </template>
 
 <script>
+import { deleteEntity } from '@/services/rest'
+
 export default {
     name: 'Song',
+
     props: {
         song: Object,
         required: true,
     },
-  computed: {
-      generateGenreList() {
-        return this.song.genre.split("|");
-      }
-  }
+
+    methods: {
+        deleteSong() {
+            deleteEntity(this.song)
+                .then(() => {
+                    this.$emit('deleted')
+                })
+        },
+    },
 }
 </script>
 

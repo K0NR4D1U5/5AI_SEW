@@ -1,50 +1,44 @@
 <template>
   <div>
-    <md-toolbar class="md-pagination" md-elevation="0">
-      <md-button :disabled="currentPage === 1" @click="currentPage = 1; load()" class="md-icon-button"><md-icon>first_page</md-icon></md-button>
-      <md-button :disabled="currentPage === 1" @click="currentPage--; load()" class="md-icon-button"><md-icon>navigate_before</md-icon></md-button>
-      <span>{{ currentPage }} / {{ maximumPages }}</span>
-      <md-button :disabled="currentPage === maximumPages" @click="currentPage++; load()" class="md-icon-button"><md-icon>navigate_next</md-icon></md-button>
-      <md-button :disabled="currentPage === maximumPages" @click="currentPage = maximumPages; load()" class="md-icon-button"><md-icon>last_page</md-icon></md-button>
-    </md-toolbar>
-    <md-list
-        class="md-song-list-container">
-      <song
-          v-for="song in songs"
-          :key="song._links.self.href"
-          :song="song"
-      />
-    </md-list>
+    <div>
+        <page-nav :page="page" @navigated="load"/>
+    </div>
+
+    <song
+        v-for="s in page.entities"
+        :key="s._links.self.href"
+        :song="s"
+        @deleted="load(page.number)"
+    />
   </div>
 </template>
 
 <script>
-import Song from '@/components/Song';
-import SongEntity from '@/models/Song';
-import { loadPage } from '@/services/rest';
+import Page from '@/models/Page'
+import PageNav from '@/components/PageNav'
+import Song from '@/components/Song'
+import SongEntity from '@/models/Song'
+import { loadPage } from '@/services/rest'
 
 export default {
     name: 'SongView',
     components: {
+        PageNav,
         Song,
     },
     data() {
         return {
-            songs: [],
-          currentPage: 1,
-          maximumPages: 5,
-          size: 4,
+            page: new Page(),
         }
     },
     created() {
         this.load()
     },
     methods: {
-        load() {
-            loadPage(SongEntity, this.currentPage - 1, this.size)
-                .then(res => {
-                    this.songs = res.entities;
-                    this.maximumPages = res.page.totalPages;
+        load(pageNum = 0) {
+            loadPage(SongEntity, pageNum, { size: 6 })
+                .then(page => {
+                    this.page = page
                 })
         }
     },
