@@ -37,6 +37,7 @@
         <md-progress-bar md-mode="indeterminate" v-if="sending"/>
 
         <md-card-actions>
+          <md-button class="md-secondary" :disabled="sending" to="../*">Cancel</md-button>
           <md-button class="md-primary" :disabled="sending" @click="validateUser">Save</md-button>
         </md-card-actions>
       </md-card>

@@ -22,7 +22,7 @@
                     md-selectable="multiple">
         <md-table-cell md-label="Title" md-sort-by="title">{{ item.title }}</md-table-cell>
         <md-table-cell md-label="Artist" md-sort-by="artist">{{ item.artist }}</md-table-cell>
-        <md-table-cell md-label="Genre" md-sort-by="genre">{{ item.genre.toString() }}</md-table-cell>
+        <md-table-cell md-label="Genre" md-sort-by="genre">{{ item.genre.toString().replaceAll(",",", ") }}</md-table-cell>
         <md-table-cell md-label="">
           <md-button class="md-icon-button" :to="{ name: 'editSong', params: {  song: item }}">
             <md-icon>edit</md-icon>
