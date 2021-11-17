@@ -3,14 +3,16 @@
     <div class="md-layout-item">{{ song.title }}</div>
     <div class="md-layout-item md-size-20">{{ song.artist }}</div>
     <div class="md-layout-item md-size-20">{{ song.genre }}</div>
-    <md-button class="md-icon-button md-dense md-primary md-accent" @click="deleteSong">
-      <md-icon>delete</md-icon>
-    </md-button>
+    <div class="md-layout-item md-size-5">
+      <md-button class="md-icon-button" @click="this.del">
+        <md-icon>close</md-icon>
+      </md-button>
+    </div>
   </div>
 </template>
 
 <script>
-import { deleteEntity } from '@/services/rest'
+import { deletEntry } from '@/services/rest'
 
 export default {
     name: 'Song',
@@ -19,15 +21,14 @@ export default {
         song: Object,
         required: true,
     },
-
-    methods: {
-        deleteSong() {
-            deleteEntity(this.song)
-                .then(() => {
-                    this.$emit('deleted')
-                })
-        },
-    },
+  methods: {
+      del() {
+        deletEntry(this.song)
+            .then(
+                () => this.$emit("onDelete")
+            )
+      }
+  }
 }
 </script>
 
