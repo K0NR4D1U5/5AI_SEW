@@ -70,7 +70,7 @@ export function addEntry(Entity, data) {
             data,
             {}
         ).catch(() => {
-            console.log("chris stinkt")
+            console.log("Axios not returnable")
             return false;
         })
 }
