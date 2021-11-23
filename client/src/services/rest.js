@@ -20,7 +20,8 @@ export function loadPage(Entity, pageNum = 0, params = {}) {
             }
         })
         .catch(response => {
-            console.error('rest.loadPage() error', response)
+            console.error('rest.load() error', response)
+            return false;
         })
 }
 
@@ -41,8 +42,10 @@ export function deletEntry(Entity) {
             .delete(
                 Entity._links.self.href,
                 {}
-            ).catch(response => {
+            )
+            .catch(response => {
                 console.error('rest.delete() error', response)
+                return false;
             })
     }
 }
@@ -56,6 +59,7 @@ export function editEntry(Entity, data) {
         )
         .catch(response => {
             console.error('rest.patch() error', response)
+            return false;
         })
 }
 
@@ -65,8 +69,8 @@ export function addEntry(Entity, data) {
             `${API_BASE}/${Entity.path}`,
             data,
             {}
-        )
-        .catch(response => {
-            console.error('rest.patch() error', response)
+        ).catch(() => {
+            console.log("chris stinkt")
+            return false;
         })
 }
