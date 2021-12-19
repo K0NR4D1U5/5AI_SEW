@@ -4,19 +4,20 @@ import Page from '@/models/Page'
 // Basis-URL aller REST-API-Endpunkte
 const API_BASE = 'http://localhost:8080/api';
 
-
-export function loadPage(Entity, pageNum = 0, params = {}) {
+export function loadPage(Song, pageNum = 0, params = {}) {
     return axios
         .get(
-            `${API_BASE}/${Entity.path}`,
+            `${API_BASE}/songs`,
             {params: {page: pageNum, ...params}}
         )
         .then(response => {
-            const page = new Page(Entity, response)
-            if (page.entities.length || (pageNum === 0)) {
+            console.log(response)
+            const page = new Page(Song, response)
+            if(page.entities.length || (pageNum === 0)) {
+                console.log('rest.load() OK', page)
                 return page
             } else {
-                return loadPage(Entity, pageNum - 1, params)
+                return loadPage(Song, pageNum - 1, params)
             }
         })
         .catch(response => {
@@ -25,42 +26,9 @@ export function loadPage(Entity, pageNum = 0, params = {}) {
         })
 }
 
-export function deletEntry(Entity) {
-    if (Array.isArray(Entity)) {
-        return axios
-            .delete(
-                `${Entity.pop()._links.self.href}`,
-                {}
-            )
-            .then(() => {
-                if (Entity.length >= 1) {
-                    return deletEntry(Entity)
-                }
-            })
-    } else {
-        return axios
-            .delete(
-                Entity._links.self.href,
-                {}
-            )
-            .catch(response => {
-                console.error('rest.delete() error', response)
-                return false;
-            })
-    }
-}
-
-export function editEntry(Entity, data) {
+export function deleteSong(Song) {
     return axios
-        .patch(
-            Entity._links.self.href,
-            data,
-            {}
-        )
-        .catch(response => {
-            console.error('rest.patch() error', response)
-            return false;
-        })
+        .delete(Song._links.self.href)
 }
 
 export function addEntry(Entity, data) {

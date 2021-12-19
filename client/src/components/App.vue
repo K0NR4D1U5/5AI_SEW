@@ -19,12 +19,10 @@
 </template>
 
 <script>
-import SongView from '@/components/SongView';
 
 export default {
     name: 'App',
     components: {
-        SongView,
     },
     methods: {
     },

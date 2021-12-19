@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <page-nav class="nav" :page="page" @navigated="load"/>
+      <page-nav :page="page" @navigated="load"/>
     </div>
     <md-table v-model="page.entities" md-card @md-selected="onSelect">
 
@@ -19,23 +19,19 @@
       </md-table-toolbar>
 
       <md-table-row slot="md-table-row" slot-scope="{ item }"
-                    md-selectable="multiple">
-        <md-table-cell md-label="Title" md-sort-by="title">{{ item.title }}</md-table-cell>
-        <md-table-cell md-label="Artist" md-sort-by="artist">{{ item.artist }}</md-table-cell>
-        <md-table-cell md-label="Genre" md-sort-by="genre">{{ item.genre.toString().replaceAll(",",", ") }}</md-table-cell>
-        <md-table-cell md-label="">
-          <md-button class="md-icon-button" :to="{ name: 'editSong', params: {  song: item }}">
-            <md-icon>edit</md-icon>
-          </md-button>
+                    md-selectable="multiple" md-auto-select>
+        <md-table-cell md-label="Title" md-sort-by="name">{{ item.title }}</md-table-cell>
+        <md-table-cell md-label="Artist" md-sort-by="email">{{ item.artist }}</md-table-cell>
+        <md-table-cell md-label="Genre" md-sort-by="gender">{{ item.genre }}</md-table-cell>
+        <md-table-cell md-label="" md-sort-by="">
+          <router-link :to="{ name: 'SongEditor', params: { data: item }}">
+            <md-button>
+              <md-icon>edit</md-icon>
+            </md-button>
+          </router-link>
         </md-table-cell>
       </md-table-row>
     </md-table>
-
-    <md-speed-dial class="md-bottom-right">
-      <md-speed-dial-target :to="{ name: 'editSong' }">
-        <md-icon>add</md-icon>
-      </md-speed-dial-target>
-    </md-speed-dial>
   </div>
 </template>
 
@@ -44,7 +40,7 @@ import Page from '@/models/Page'
 import PageNav from '@/components/PageNav'
 import Song from '@/components/Song'
 import SongEntity from '@/models/Song'
-import {deletEntry, loadPage} from '@/services/rest'
+import {deleteSong, loadPage} from '@/services/rest'
 
 export default {
   name: 'SongView',
@@ -90,7 +86,10 @@ export default {
       return `${count} user${plural} selected`
     },
     del() {
-      deletEntry(this.selected).then(() => this.load(this.page.number))
+      deleteSong(this.selected[0])
+          .then(() => {
+            this.load(0, 100)
+          });
     }
   }
 }
