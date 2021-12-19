@@ -13,7 +13,7 @@ export function loadPage(Song, pageNum = 0, params = {}) {
         .then(response => {
             console.log(response)
             const page = new Page(Song, response)
-            if(page.entities.length || (pageNum === 0)) {
+            if (page.entities.length || (pageNum === 0)) {
                 console.log('rest.load() OK', page)
                 return page
             } else {
@@ -29,6 +29,16 @@ export function loadPage(Song, pageNum = 0, params = {}) {
 export function deleteSong(Song) {
     return axios
         .delete(Song._links.self.href)
+}
+
+export function editSong(Song, data) {
+    return axios
+        .patch(
+            Song._links.self.href,
+            data).catch(response => {
+
+            }
+        )
 }
 
 export function addEntry(Entity, data) {
