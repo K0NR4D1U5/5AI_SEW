@@ -1,37 +1,22 @@
 <template>
-  <div>
+  <div class="song-view">
     <div>
       <page-nav :page="page" @navigated="load"/>
     </div>
     <md-table v-model="page.entities" md-card @md-selected="onSelect">
 
-      <md-table-toolbar>
-        <h1 class="md-title">Songs</h1>
-      </md-table-toolbar>
-      <md-table-toolbar slot="md-table-alternate-header" slot-scope="{ count }">
-        <div class="md-toolbar-section-start">{{ getAlternateLabel(count) }}</div>
+    <md-speed-dial class="md-bottom-right">
+      <md-speed-dial-target :to="{ name: 'song-editor' }">
+          <md-icon>add</md-icon>
+      </md-speed-dial-target>
+    </md-speed-dial>
 
-        <div class="md-toolbar-section-end">
-          <md-button class="md-icon-button" @click="del">
-            <md-icon>delete</md-icon>
-          </md-button>
-        </div>
-      </md-table-toolbar>
-
-      <md-table-row slot="md-table-row" slot-scope="{ item }"
-                    md-selectable="multiple" md-auto-select>
-        <md-table-cell md-label="Title" md-sort-by="name">{{ item.title }}</md-table-cell>
-        <md-table-cell md-label="Artist" md-sort-by="email">{{ item.artist }}</md-table-cell>
-        <md-table-cell md-label="Genre" md-sort-by="gender">{{ item.genre }}</md-table-cell>
-        <md-table-cell md-label="" md-sort-by="">
-          <router-link :to="{ name: 'SongEditor', params: { data: item }}">
-            <md-button>
-              <md-icon>edit</md-icon>
-            </md-button>
-          </router-link>
-        </md-table-cell>
-      </md-table-row>
-    </md-table>
+    <song
+        v-for="s in page.entities"
+        :key="s._links.self.href"
+        :song="s"
+        @deleted="load(page.number)"
+    />
   </div>
 </template>
 
@@ -79,11 +64,13 @@ export default {
     getAlternateLabel(count) {
       let plural = ''
 
-      if (count > 1) {
-        plural = 's'
-      }
-
-      return `${count} user${plural} selected`
+    methods: {
+        load(pageNum = 0) {
+            loadPage(SongEntity, pageNum, { size: 6, projection: 'ohneAudio' })
+                .then(page => {
+                    this.page = page
+                })
+        }
     },
     del() {
       deleteSong(this.selected[0])
@@ -96,7 +83,11 @@ export default {
 </script>
 
 <style scoped>
-.nav {
-  margin-bottom: 15px;
+.song-view .page-nav {
+    margin-bottom: 1em;
+}
+
+.song-view .song:nth-child(2n+1) {
+    background-color: #f0f0f0;
 }
 </style>

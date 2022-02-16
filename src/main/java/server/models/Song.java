@@ -3,29 +3,37 @@ package server.models;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-public class Song {
+public class Song extends Persistent {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NotNull
+    @NotBlank(message = "Ein Lied benötigt einen Titel.")
+    @Size(min = 4)
+    @Column(unique = true)
     private String title;
 
-    @NotNull
-    @Size(min = 3)
-    private String artist;
+    @ManyToOne(optional = false)
+    private Artist artist;
 
-    private String genre;
+    @ElementCollection
+    @NotEmpty
+    private Set<@NotBlank String> genres;
+
+    private String duration;
+
+    // Audio-Track als Data-URL
+    @Lob
+    private String audio;
+
+    private String filename;
+
+    @Transient
+    private Integer size;
+
 }

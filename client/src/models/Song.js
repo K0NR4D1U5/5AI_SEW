@@ -3,6 +3,10 @@ export default class Song {
         Object.assign(this, obj)
         this.genre = this.genre === "" ? [] : this.genre.split('|')
     }
+
+    isNew() {
+        return !this._links
+    }
 }
 
 Song.path = 'songs'

@@ -13,13 +13,12 @@
       </div>
     </md-app-toolbar>
     <md-app-content>
-      <router-view></router-view>
+      <router-view />
     </md-app-content>
   </md-app>
 </template>
 
 <script>
-
 export default {
     name: 'App',
     components: {

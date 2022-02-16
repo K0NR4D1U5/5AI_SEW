@@ -43,10 +43,11 @@
       <excludeFolder url="file://$MODULE_DIR$/dist_electron" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/resources/public" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
+      <excludeFolder url="file://$MODULE_DIR$/media" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: at.rennweg.htl:autoconfig:3.1.4-RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: at.rennweg.htl:autoconfig:3.2.0-RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:2.5.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.5.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.5.3" level="project" />
