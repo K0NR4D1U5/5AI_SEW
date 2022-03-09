@@ -5,18 +5,18 @@
         <div class="md-layout-item md-size-20">{{ song.artist.name }}</div>
 
         <div class="md-layout-item md-size-30">
-            <span class="genre" v-for="g in song.genres" :key="g">{{ g }}</span>
+            <span v-for="g in song.genres" :key="g" class="genre">{{ g }}</span>
         </div>
 
         <md-button
-            class="md-icon-button md-dense"
-            @click="togglePlaying"
+                class="md-icon-button md-dense"
+                @click="togglePlaying"
         >
             <md-icon v-show="!isPlaying">play_arrow</md-icon>
             <md-icon v-show="isPlaying">stop</md-icon>
         </md-button>
 
-        <md-button class="md-icon-button md-dense" :to="{ name: 'song-editor', params: { song } }">
+        <md-button :to="{ name: 'song-editor', params: { song } }" class="md-icon-button md-dense">
             <md-icon>edit</md-icon>
         </md-button>
 
@@ -27,8 +27,8 @@
 </template>
 
 <script>
-import { deleteEntity } from '@/services/rest'
-import { play, playing, stop } from '@/services/player'
+import {deleteEntity} from '@/services/rest'
+import {play, stop} from '@/services/player'
 
 export default {
     name: 'Song',

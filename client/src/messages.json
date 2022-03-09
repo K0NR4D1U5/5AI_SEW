@@ -1,9 +1,8 @@
 {
-    "en": {
-        "title": "Vue.js template"
-    },
-
-    "de": {
-        "title": "Vue.js-Vorlage"
-    }
+  "en": {
+    "title": "Vue.js template"
+  },
+  "de": {
+    "title": "Vue.js-Vorlage"
+  }
 }

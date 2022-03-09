@@ -43,7 +43,7 @@ export default function options(vueClass) {
     vueClass.use(VueRouter)
     vueClass.use(Vuex)
     vueClass.use(VueMaterial)
-    vueClass.use(VueMaterialLocales, [ de, en ])
+    vueClass.use(VueMaterialLocales, [de, en])
     vueClass.use(VueI18n)
     vueClass.use(Vuelidate)
     vueClass.use(MdModalDialog)
@@ -53,9 +53,9 @@ export default function options(vueClass) {
 
     const locale = vueClass.material.selectLocale(navigator.language, 'en')
 
-    router = new VueRouter({ routes })
+    router = new VueRouter({routes})
     store = new Vuex.Store(storeConfig)
-    i18n = new VueI18n({ locale, messages })
+    i18n = new VueI18n({locale, messages})
 
     return {
         router,

@@ -1,23 +1,24 @@
 <template>
-  <div class="song-view">
-    <div>
-      <page-nav :page="page" @navigated="load"/>
+    <div class="song-view">
+        <div>
+            <page-nav :page="page" @navigated="load"/>
+        </div>
+        <md-table v-model="page.entities" md-card @md-selected="onSelect">
+
+            <md-speed-dial class="md-bottom-right">
+                <md-speed-dial-target :to="{ name: 'song-editor' }">
+                    <md-icon>add</md-icon>
+                </md-speed-dial-target>
+            </md-speed-dial>
+
+            <song
+                    v-for="s in page.entities"
+                    :key="s._links.self.href"
+                    :song="s"
+                    @deleted="load(page.number)"
+            />
+        </md-table>
     </div>
-    <md-table v-model="page.entities" md-card @md-selected="onSelect">
-
-    <md-speed-dial class="md-bottom-right">
-      <md-speed-dial-target :to="{ name: 'song-editor' }">
-          <md-icon>add</md-icon>
-      </md-speed-dial-target>
-    </md-speed-dial>
-
-    <song
-        v-for="s in page.entities"
-        :key="s._links.self.href"
-        :song="s"
-        @deleted="load(page.number)"
-    />
-  </div>
 </template>
 
 <script>
@@ -28,57 +29,43 @@ import SongEntity from '@/models/Song'
 import {deleteSong, loadPage} from '@/services/rest'
 
 export default {
-  name: 'SongView',
+    name: 'SongView',
 
-  components: {
-    PageNav,
-    Song,
-  },
-  data() {
-    return {
-      page: new Page(),
-      selected: [],
-      entities: {
-        mdCount: null,
-        mdPage: null,
-        mdData: []
-      },
-      rowsPerPage: 3,
-    }
-  },
-
-  created() {
-    this.load()
-  },
-
-  methods: {
-    load(pageNum = 0) {
-      loadPage(SongEntity, pageNum, {size: 5})
-          .then(entities => {
-            this.page = entities
-          })
+    components: {
+        PageNav,
+        Song,
     },
-    onSelect(items) {
-      this.selected = items
+    data() {
+        return {
+            page: new Page(),
+            selected: [],
+            entities: {
+                mdCount: null,
+                mdPage: null,
+                mdData: []
+            },
+            rowsPerPage: 3,
+        }
     },
-    getAlternateLabel(count) {
-      let plural = ''
+
+    created() {
+        this.load()
+    },
 
     methods: {
         load(pageNum = 0) {
-            loadPage(SongEntity, pageNum, { size: 6, projection: 'ohneAudio' })
+            loadPage(SongEntity, pageNum, {size: 6, projection: 'ohneAudio'})
                 .then(page => {
                     this.page = page
                 })
         }
     },
     del() {
-      deleteSong(this.selected[0])
-          .then(() => {
-            this.load(0, 100)
-          });
+        deleteSong(this.selected[0])
+            .then(() => {
+                this.load(0, 100)
+            });
     }
-  }
 }
 </script>
 

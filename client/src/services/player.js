@@ -1,6 +1,6 @@
 import Song from '@/models/Song'
-import { loadEntity } from '@/services/rest'
-import { store } from '@/config'
+import {loadEntity} from '@/services/rest'
+import {store} from '@/config'
 
 // Da zu jedem Zeitpunkt höchstens ein einzelner Song abgespielt wird,
 // reicht ein einziger Player
@@ -17,7 +17,7 @@ export function play(song) {
     // Audiotrack laden, wenn noch nicht vorhanden
     const audioPromise = song.audio
         ? Promise.resolve(song.audio)
-        : loadEntity(Song, song._links.self.href, { projection: 'nurAudio' })
+        : loadEntity(Song, song._links.self.href, {projection: 'nurAudio'})
             .then(songMitAudio => songMitAudio.audio)
 
     // Song abspielen, sobald Audiotrack verfügbar

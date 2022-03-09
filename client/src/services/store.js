@@ -8,8 +8,7 @@ export default {
     },
 
     /** Methods that read the application state */
-    getters: {
-    },
+    getters: {},
 
     /** Methods that change the application state synchronously */
     mutations: {
@@ -19,6 +18,5 @@ export default {
     },
 
     /** Methods that change the application state asynchronously */
-    actions: {
-    },
+    actions: {},
 }

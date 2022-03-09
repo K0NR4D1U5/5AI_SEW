@@ -6,7 +6,7 @@
 
         <div class="md-layout-item">{{ artist.name }}</div>
 
-        <md-button class="md-icon-button md-dense" :to="{ name: 'artist-editor', params: { artist } }">
+        <md-button :to="{ name: 'artist-editor', params: { artist } }" class="md-icon-button md-dense">
             <md-icon>edit</md-icon>
         </md-button>
 
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { deleteEntity } from '@/services/rest'
+import {deleteEntity} from '@/services/rest'
 
 export default {
     name: 'Artist',

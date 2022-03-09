@@ -30,7 +30,7 @@ export function loadPage(Entity, pageNum = 0, params = {}, query) {
         : `${API_BASE}/${Entity.path}`
 
     return axios
-        .get(url, { params: { page: pageNum, ...params } })
+        .get(url, {params: {page: pageNum, ...params}})
         .then(response => {
             const page = new Page(Entity, response)
 
@@ -40,7 +40,7 @@ export function loadPage(Entity, pageNum = 0, params = {}, query) {
                 return page
             } else {
                 // Letzte vorhandene Seite ausliefern
-                return loadPage(Entity, pageNum-1, params)
+                return loadPage(Entity, pageNum - 1, params)
             }
         })
         .catch(response => {
@@ -65,7 +65,7 @@ export function deleteSong(Song) {
  */
 export function loadEntity(Entity, href, params) {
     return axios
-        .get(href, { params })
+        .get(href, {params})
         .then(response => {
             const result = new Entity(response.data)
             console.log('rest.loadEntity() OK', result)
@@ -88,7 +88,7 @@ export function loadEntity(Entity, href, params) {
 export function saveEntity(entity) {
     const promise = entity.isNew()
         ? axios.post(`${API_BASE}/${entity.constructor.path}`, entity)
-        : axios.patch(entity._links.self.href, entity, { headers: { 'If-Match': entity.etag } })
+        : axios.patch(entity._links.self.href, entity, {headers: {'If-Match': entity.etag}})
 
     return promise
         .then(response => {
@@ -99,7 +99,7 @@ export function saveEntity(entity) {
             return saved
         })
         .catch(response => {
-            console.log('rest.saveEntity() error', response )
+            console.log('rest.saveEntity() error', response)
             return Promise.reject(response)
         })
 }
@@ -135,6 +135,7 @@ export function addEntry(Entity, data) {
             return Promise.reject(response)
         })
 }
+
 /**
  * Ersetzt alle _embedded-Objekte in der Response durch ihren Inhalt
  * und entfernt HATEOAS-Templates ('{...}') von allen Links.
@@ -144,7 +145,7 @@ function embeddedAufloesen(obj) {
         // Arrayelemente auflösen
         obj.forEach(embeddedAufloesen)
 
-    } else if (obj && typeof(obj) === 'object') {
+    } else if (obj && typeof (obj) === 'object') {
         if (obj._embedded) {
             // Den _embedded-Inhalt in diesem Objekt platzieren
             let embedded = obj._embedded
@@ -185,7 +186,7 @@ function entitiesVerlinken(obj, recursive) {
         // Arrayelemente ersetzen, wenn nötig
         return obj.map(el => entitiesVerlinken(el, true))
 
-    } else if (obj && typeof(obj) === 'object' && obj.constructor !== Date) {
+    } else if (obj && typeof (obj) === 'object' && obj.constructor !== Date) {
         // Properties ersetzen, wenn nötig
         const result = {}
         Object.keys(obj).forEach(k => {

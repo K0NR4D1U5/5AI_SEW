@@ -20,7 +20,6 @@ import java.util.function.Function;
  * Erleichtert die bidirektionalen Updates von 1:n-Beziehungen zwischen Entities.
  *
  * @param <ID> Datentyp des Primärschlüssels
- *
  * @author F. Kasper, ferdinand.kasper@bildung.gv.at
  */
 @MappedSuperclass
@@ -37,10 +36,10 @@ public abstract class Related<ID extends Serializable> {
     @Override
     public boolean equals(Object other) {
         return (other == this)
-            || ((getId() != null)
-            && (other != null)
-            && getClass().equals(other.getClass())
-            && getId().equals(((Related<ID>) other).getId()));
+                || ((getId() != null)
+                && (other != null)
+                && getClass().equals(other.getClass())
+                && getId().equals(((Related<ID>) other).getId()));
     }
 
 
@@ -55,26 +54,19 @@ public abstract class Related<ID extends Serializable> {
 
     /**
      * Hilfsmethode für die 1-Seite einer 1:n-Beziehung, die auch die n-Seite aktualisiert.
-     *
+     * <p>
      * Pro 1:n-Beziehung entweder diese Methode verwenden oder {@link #setManyToOne(Related, Related, Function)},
      * aber nicht beide.
      *
-     * @param <O>
-     *      Datentyp der 1-Seite
-     * @param <M>
-     *      Datentyp der n-Seite
-     * @param <C>
-     *      {@link Collection} oder Subklasse
-     * @param many
-     *      derzeitige {@link Collection} von n-Entities auf der 1-Seite
-     * @param newMany
-     *      {@link Collection} von n-Entities, die der 1-Seite zugewiesen werden soll
-     * @param setOne
-     *      {@linkplain BiConsumer set-Methode} der n-Seite für die Entity der 1-Seite
-     * @return
-     *      {@link Collection} von n-Entities, die zugewiesen wurde
+     * @param <O>     Datentyp der 1-Seite
+     * @param <M>     Datentyp der n-Seite
+     * @param <C>     {@link Collection} oder Subklasse
+     * @param many    derzeitige {@link Collection} von n-Entities auf der 1-Seite
+     * @param newMany {@link Collection} von n-Entities, die der 1-Seite zugewiesen werden soll
+     * @param setOne  {@linkplain BiConsumer set-Methode} der n-Seite für die Entity der 1-Seite
+     * @return {@link Collection} von n-Entities, die zugewiesen wurde
      */
-    protected <O extends Related<ID>, M extends Related<ID>,C extends Collection<M>>
+    protected <O extends Related<ID>, M extends Related<ID>, C extends Collection<M>>
     void setOneToMany(C many, C newMany, BiConsumer<M, O> setOne) {
 
         // Soll überhaupt eine andere Collection zugewiesen werden?
@@ -96,24 +88,17 @@ public abstract class Related<ID extends Serializable> {
 
     /**
      * Hilfsmethode für die n-Seite einer 1:n-Beziehung, die auch die 1-Seite aktualisiert.
-     *
+     * <p>
      * Pro 1:n-Beziehung entweder diese Methode verwenden oder {@link #setOneToMany(Collection, Collection, BiConsumer)},
      * aber nicht beide.
      *
-     * @param <O>
-     *      Datentyp der 1-Seite
-     * @param <M>
-     *      Datentyp der n-Seite
-     * @param <C>
-     *      {@link Collection} oder Subklasse
-     * @param one
-     *      derzeitige 1-Entity auf der n-Seite
-     * @param newOne
-     *      1-Entity, die der n-Seite zugewiesen werden soll
-     * @param getMany
-     *      {@linkplain Function get-Methode} der 1-Seite für die {@link Collection} der n-Entities
-     * @return
-     *      1-Entity, die zugewiesen wurde
+     * @param <O>     Datentyp der 1-Seite
+     * @param <M>     Datentyp der n-Seite
+     * @param <C>     {@link Collection} oder Subklasse
+     * @param one     derzeitige 1-Entity auf der n-Seite
+     * @param newOne  1-Entity, die der n-Seite zugewiesen werden soll
+     * @param getMany {@linkplain Function get-Methode} der 1-Seite für die {@link Collection} der n-Entities
+     * @return 1-Entity, die zugewiesen wurde
      */
     protected <O extends Related<ID>, M extends Related<ID>, C extends Collection<M>>
     O setManyToOne(O one, O newOne, Function<O, C> getMany) {

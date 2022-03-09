@@ -2,32 +2,32 @@
     <div class="song-editor">
         <md-toolbar class="md-dense">
             <div class="md-toolbar-section-start">
-                <md-button class="md-icon-button" :to="{ name: 'song-view' }">
+                <md-button :to="{ name: 'song-view' }" class="md-icon-button">
                     <md-icon>arrow_back</md-icon>
                 </md-button>
                 <div class="md-title">Song bearbeiten</div>
             </div>
 
             <div class="md-toolbar-section-end">
-                <md-button class="md-icon-button"
-                     @click="save"
-                     :disabled="$v.$invalid">
+                <md-button :disabled="$v.$invalid"
+                           class="md-icon-button"
+                           @click="save">
                     <md-icon>check</md-icon>
                 </md-button>
             </div>
         </md-toolbar>
 
         <md-vuelidated
-            field="md-field"
-            class="md-layout-item">
+                class="md-layout-item"
+                field="md-field">
             <label>Titel</label>
-            <md-input type="text" v-model="song.title" />
+            <md-input v-model="song.title" type="text"/>
 
             <md-vuelidated-msg constraint="required">
                 Dies ist ein Pflichtfeld.
             </md-vuelidated-msg>
-            <md-vuelidated-msg constraint="minLength" v-slot="{ min }">
-              Der Titel muss mindestens {{ min }} Zeichen lang sein.
+            <md-vuelidated-msg v-slot="{ min }" constraint="minLength">
+                Der Titel muss mindestens {{ min }} Zeichen lang sein.
             </md-vuelidated-msg>
         </md-vuelidated>
 
@@ -44,7 +44,7 @@
             </template>
         </md-autocomplete>
 
-        <md-vuelidated field="md-chips" v-model="song.genres" :md-auto-insert="true" md-placeholder="Genres*">
+        <md-vuelidated v-model="song.genres" :md-auto-insert="true" field="md-chips" md-placeholder="Genres*">
             <md-vuelidated-msg constraint="required">
                 Mindestens ein Genre muss angegeben werden.
             </md-vuelidated-msg>
@@ -56,10 +56,10 @@
         <div class="md-layout md-alignment-center-left">
             <md-field class="md-layout-item">
                 <label>Audiodatei</label>
-                <md-file @md-change="readAudioFile" v-model="song.filename" accept="audio/*" />
+                <md-file v-model="song.filename" accept="audio/*" @md-change="readAudioFile"/>
             </md-field>
 
-            <audio class="md-layout-item md-flex-nogrow" :src="song.audio" controls></audio>
+            <audio :src="song.audio" class="md-layout-item md-flex-nogrow" controls></audio>
         </div>
 
         <div v-if="errors">
@@ -73,8 +73,8 @@
 <script>
 import Song from '@/models/Song'
 import Artist from '@/models/Artist'
-import { saveEntity, loadPage } from '@/services/rest'
-import { required, minLength, between } from 'vuelidate/lib/validators'
+import {loadPage, saveEntity} from '@/services/rest'
+import {minLength, required} from 'vuelidate/lib/validators'
 
 export default {
     name: 'SongEditor',
@@ -105,8 +105,8 @@ export default {
                     this.$router.back()
                 })
                 .catch(errors => {
-                  console.log("in editor: ",errors)
-                  this.errors = errors
+                    console.log("in editor: ", errors)
+                    this.errors = errors
                 })
         },
 
@@ -119,7 +119,7 @@ export default {
         },
 
         searchArtists(suchbegriff) {
-            loadPage(Artist, 0, { size: 99999, name: suchbegriff || '' }, 'findByNameContainsIgnoreCase')
+            loadPage(Artist, 0, {size: 99999, name: suchbegriff || ''}, 'findByNameContainsIgnoreCase')
                 .then(page => this.artists = page.entities)
 
         },
