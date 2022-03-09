@@ -6,7 +6,7 @@ export default class Song extends Persistent {
     constructor(obj) {
         super(obj)
 
-        if(this.isNew()) {
+        if (this.isNew()) {
             this.artist = new Artist()
             this.genres = []
         }
