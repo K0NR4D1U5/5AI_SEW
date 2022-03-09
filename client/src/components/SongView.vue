@@ -11,25 +11,25 @@
                 </md-speed-dial-target>
             </md-speed-dial>
 
-      <div class="header md-layout md-alignment-center-left">
-        <md-field class="md-layout-item">
-            <label>Titel</label>
-            <md-input type="text" v-model="title" @input="load" />
-        </md-field>
+            <div class="header md-layout md-alignment-center-left">
+                <md-field class="md-layout-item">
+                    <label>Titel</label>
+                    <md-input v-model="title" type="text" @input="load"/>
+                </md-field>
 
-        <md-field class="md-layout-item">
-            <label>Interpret</label>
-            <md-input type="text" v-model="name" @input="load" />
-        </md-field>
-      </div>
+                <md-field class="md-layout-item">
+                    <label>Interpret</label>
+                    <md-input v-model="name" type="text" @input="load"/>
+                </md-field>
+            </div>
 
-    <song
-        v-for="s in page.entities"
-        :key="s._links.self.href"
-        :song="s"
-        @deleted="load(page.number)"
-    />
-  </div>
+            <song
+                    v-for="s in page.entities"
+                    :key="s._links.self.href"
+                    :song="s"
+                    @deleted="load(page.number)"
+            />
+    </div>
 </template>
 
 <script>
@@ -71,9 +71,9 @@ export default {
                 },
                 'findByTitleContainsAndArtistNameContainsAllIgnoreCase'
             )
-            .then(page => {
-                this.page = page
-            })
+                .then(page => {
+                    this.page = page
+                })
         }
     },
     del() {
