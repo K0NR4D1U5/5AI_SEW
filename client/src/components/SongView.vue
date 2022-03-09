@@ -11,14 +11,25 @@
                 </md-speed-dial-target>
             </md-speed-dial>
 
-            <song
-                    v-for="s in page.entities"
-                    :key="s._links.self.href"
-                    :song="s"
-                    @deleted="load(page.number)"
-            />
-        </md-table>
-    </div>
+      <div class="header md-layout md-alignment-center-left">
+        <md-field class="md-layout-item">
+            <label>Titel</label>
+            <md-input type="text" v-model="title" @input="load" />
+        </md-field>
+
+        <md-field class="md-layout-item">
+            <label>Interpret</label>
+            <md-input type="text" v-model="name" @input="load" />
+        </md-field>
+      </div>
+
+    <song
+        v-for="s in page.entities"
+        :key="s._links.self.href"
+        :song="s"
+        @deleted="load(page.number)"
+    />
+  </div>
 </template>
 
 <script>
@@ -38,13 +49,8 @@ export default {
     data() {
         return {
             page: new Page(),
-            selected: [],
-            entities: {
-                mdCount: null,
-                mdPage: null,
-                mdData: []
-            },
-            rowsPerPage: 3,
+            title: null,
+            name: null,
         }
     },
 
@@ -54,10 +60,20 @@ export default {
 
     methods: {
         load(pageNum = 0) {
-            loadPage(SongEntity, pageNum, {size: 6, projection: 'ohneAudio'})
-                .then(page => {
-                    this.page = page
-                })
+            loadPage(
+                SongEntity,
+                pageNum,
+                {
+                    size: 6,
+                    projection: 'ohneAudio',
+                    title: this.title || '',
+                    name: this.name || '',
+                },
+                'findByTitleContainsAndArtistNameContainsAllIgnoreCase'
+            )
+            .then(page => {
+                this.page = page
+            })
         }
     },
     del() {
@@ -69,12 +85,21 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .song-view .page-nav {
     margin-bottom: 1em;
 }
 
 .song-view .song:nth-child(2n+1) {
     background-color: #f0f0f0;
+}
+
+.song-view .header .md-field {
+    margin-top: -6px;
+    margin-bottom: 6px;
+}
+
+.song-view .header > * + * {
+    margin-left: 1em;
 }
 </style>
