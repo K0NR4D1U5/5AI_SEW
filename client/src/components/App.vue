@@ -9,7 +9,7 @@
         <router-link to="/" class="md-title">YouSong</router-link>
       </div>
       <div class="md-subheading md-toolbar-section-end">
-        <router-link to="/info" class="md-title">Info</router-link>
+          <router-link to="/artists" class="md-title">Interpreten</router-link>
       </div>
     </md-app-toolbar>
     <md-app-content>
