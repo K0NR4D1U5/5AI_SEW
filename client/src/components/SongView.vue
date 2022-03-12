@@ -29,6 +29,7 @@
                     :song="s"
                     @deleted="load(page.number)"
             />
+        </md-table>
     </div>
 </template>
 

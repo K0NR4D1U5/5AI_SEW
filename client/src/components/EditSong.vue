@@ -18,7 +18,8 @@
                         <div class="md-layout-item md-small-size-100">
                             <md-field :class="getValidationClass('artist')">
                                 <label for="artist">Artist</label>
-                                <md-input id="artist" v-model="song.artist" :disabled="sending" autocomplete="song-artist"
+                                <md-input id="artist" v-model="song.artist" :disabled="sending"
+                                          autocomplete="song-artist"
                                           name="artist"/>
                                 <span v-if="!$v.song.artist.required"
                                       class="md-error">The artist name is required</span>
