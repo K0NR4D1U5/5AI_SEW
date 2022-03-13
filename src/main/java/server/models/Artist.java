@@ -23,7 +23,7 @@ public class Artist extends Persistent {
     @Lob
     private String image;
 
-    @OneToMany(mappedBy = "artist")
+    @OneToMany(mappedBy = "artist") //1 zu n; verbunden mit Song.java:private Artist artist; bzw. assign this song to this artist
     private Set<Song> songs;
 
 }

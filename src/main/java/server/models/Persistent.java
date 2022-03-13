@@ -2,6 +2,7 @@ package server.models;
 
 import javax.persistence.*;
 
+//Klasse die Alle Entities haben
 
 /**
  * Basisklasse aller persistenten Entities mit {@link Long} als Primärschlüssel.

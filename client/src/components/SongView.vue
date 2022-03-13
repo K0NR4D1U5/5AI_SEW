@@ -14,7 +14,7 @@
             <div class="header md-layout md-alignment-center-left">
                 <md-field class="md-layout-item">
                     <label>Titel</label>
-                    <md-input v-model="title" type="text" @input="load(0)"/>
+                    <md-input v-model="title" type="text" @input="load(0)"/> <!-- läd aus den methods: unten die querrie für das geinputtete -->
                 </md-field>
 
                 <md-field class="md-layout-item">

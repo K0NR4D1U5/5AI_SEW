@@ -8,7 +8,9 @@ import server.models.Artist;
 
 
 @RepositoryRestResource
-public interface ArtistRepository extends PagingAndSortingRepository<Artist, Long> {
+public interface ArtistRepository extends PagingAndSortingRepository<Artist, Long> { //muss interface sein. erstellt die http-schnittstelle zur datenbank
+
+//    das sind querries
 
     Page<Artist> findByNameContainsIgnoreCase(String name, Pageable p);
 
